@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Crash Game Demo</title>
+
+<style>
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#10131a;
+    color:white;
+}
+
+.header{
+    padding:18px;
+    text-align:center;
+    background:#171b24;
+}
+
+.header h1{
+    margin:0;
+    color:#ff3b30;
+}
+
+.balance{
+    margin-top:8px;
+    font-size:18px;
+}
+
+.game{
+    max-width:600px;
+    margin:25px auto;
+    padding:15px;
+}
+
+.screen{
+    height:330px;
+    border-radius:18px;
+    background:linear-gradient(#18243a,#090d14);
+    position:relative;
+    overflow:hidden;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.multiplier{
+    font-size:55px;
+    font-weight:bold;
+}
+
+.plane{
+    position:absolute;
+    font-size:55px;
+    left:20px;
+    bottom:20px;
+    transition:all .2s linear;
+}
+
+.controls{
+    background:#171b24;
+    margin-top:15px;
+    padding:18px;
+    border-radius:15px;
+}
+
+input{
+    width:100%;
+    padding:14px;
+    border-radius:10px;
+    border:0;
+    margin-bottom:12px;
+    font-size:16px;
+}
+
+button{
+    width:100%;
+    padding:14px;
+    border:0;
+    border-radius:10px;
+    font-size:17px;
+    font-weight:bold;
+    cursor:pointer;
+    background:#00c853;
+    color:white;
+}
+
+button:disabled{
+    background:#555;
+}
+
+.status{
+    text-align:center;
+    margin-top:12px;
+    min-height:22px;
+}
+
+.history{
+    margin-top:15px;
+    background:#171b24;
+    padding:15px;
+    border-radius:15px;
+}
+
+.history h3{
+    margin-top:0;
+}
+
+.history div{
+    padding:8px;
+    border-bottom:1px solid #30343d;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+    <h1>✈️ CRASH DEMO</h1>
+    <div class="balance">
+        Virtual Coins: <b id="balance">10000</b>
+    </div>
+</div>
+
+<div class="game">
+
+    <div class="screen">
+        <div class="multiplier" id="multiplier">1.00x</div>
+        <div class="plane" id="plane">✈️</div>
+    </div>
+
+    <div class="controls">
+
+        <input
+            type="number"
+            id="bet"
+            placeholder="Enter virtual coins"
+            min="1"
+            value="100"
+        >
+
+        <button id="startBtn" onclick="startGame()">
+            START DEMO
+        </button>
+
+        <div class="status" id="status">
+            Demo game — virtual coins only
+        </div>
+
+    </div>
+
+    <div class="history">
+        <h3>Game History</h3>
+        <div id="history">
+            No games yet
+        </div>
+    </div>
+
+</div>
+
+<script>
+
+let balance = 10000;
+let multiplier = 1;
+let crashPoint = 0;
+let gameRunning = false;
+let timer;
+
+const balanceEl = document.getElementById("balance");
+const multiplierEl = document.getElementById("multiplier");
+const planeEl = document.getElementById("plane");
+const statusEl = document.getElementById("status");
+const startBtn = document.getElementById("startBtn");
+const historyEl = document.getElementById("history");
+
+function updateBalance(){
+    balanceEl.textContent = Math.floor(balance);
+}
+
+function startGame(){
+
+    if(gameRunning) return;
+
+    const bet = Number(document.getElementById("bet").value);
+
+    if(!bet || bet <= 0){
+        statusEl.textContent = "Enter a valid virtual coin amount.";
+        return;
+    }
+
+    if(bet > balance){
+        statusEl.textContent = "Not enough virtual coins.";
+        return;
+    }
+
+    balance -= bet;
+    updateBalance();
+
+    multiplier = 1;
+    crashPoint = randomCrash();
+
+    gameRunning = true;
+
+    startBtn.disabled = true;
+    startBtn.textContent = "RUNNING...";
+
+    statusEl.textContent = "Game running...";
+
+    planeEl.style.left = "20px";
+    planeEl.style.bottom = "20px";
+
+    timer = setInterval(() => {
+
+        multiplier += 0.01 + multiplier * 0.002;
+
+        multiplierEl.textContent =
+            multiplier.toFixed(2) + "x";
+
+        let progress =
+            Math.min((multiplier / crashPoint) * 100, 100);
+
+        planeEl.style.left =
+            (20 + progress * 4.5) + "%";
+
+        planeEl.style.bottom =
+            (20 + progress * 1.8) + "px";
+
+        if(multiplier >= crashPoint){
+            crash(bet);
+        }
+
+    },100);
+}
+
+function randomCrash(){
+
+    return Number(
+        (1.10 + Math.random() * 5).toFixed(2)
+    );
+}
+
+function crash(bet){
+
+    clearInterval(timer);
+
+    gameRunning = false;
+
+    multiplierEl.textContent =
+        crashPoint.toFixed(2) + "x";
+
+    statusEl.textContent =
+        "💥 CRASH at " + crashPoint.toFixed(2) + "x";
+
+    addHistory(
+        "💥 Crash " + crashPoint.toFixed(2) +
+        "x | Bet: " + bet
+    );
+
+    startBtn.disabled = false;
+    startBtn.textContent = "START DEMO";
+}
+
+function addHistory(text){
+
+    if(historyEl.textContent === "No games yet"){
+        historyEl.innerHTML = "";
+    }
+
+    const row = document.createElement("div");
+
+    row.textContent = text;
+
+    historyEl.prepend(row);
+}
+
+updateBalance();
+
+</script>
+
+</body>
+  </html>
