@@ -7,7 +7,9 @@
 <title>Crash360Live</title>
 
 <style>
-*{box-sizing:border-box}
+*{
+    box-sizing:border-box;
+}
 
 body{
     margin:0;
@@ -16,19 +18,16 @@ body{
     color:#fff;
 }
 
-button,input{
-    font-family:inherit;
-}
-
 /* LOGIN */
-.login{
+
+#loginScreen{
     position:fixed;
     inset:0;
     background:#080b12;
     display:flex;
     align-items:center;
     justify-content:center;
-    z-index:9999;
+    z-index:99999;
 }
 
 .loginBox{
@@ -38,13 +37,18 @@ button,input{
     padding:30px;
     border-radius:22px;
     text-align:center;
+    box-shadow:0 15px 50px rgba(0,0,0,.6);
 }
 
-.brand{
+.loginLogo{
     color:#ff3b30;
     font-size:30px;
     font-weight:bold;
-    margin-bottom:12px;
+    margin-bottom:10px;
+}
+
+.loginBox p{
+    color:#aaa;
 }
 
 .loginBox input{
@@ -58,18 +62,20 @@ button,input{
     font-size:16px;
 }
 
-.greenBtn{
+.enterBtn{
     width:100%;
-    padding:14px;
+    padding:15px;
     border:0;
     border-radius:10px;
     background:#00c853;
     color:white;
     font-size:17px;
     font-weight:bold;
+    cursor:pointer;
 }
 
 /* HEADER */
+
 .header{
     background:#151a24;
     padding:18px;
@@ -84,8 +90,8 @@ button,input{
 }
 
 .player{
-    color:#aaa;
     margin-top:7px;
+    color:#aaa;
 }
 
 .balance{
@@ -98,6 +104,7 @@ button,input{
 }
 
 /* WALLET */
+
 .wallet{
     width:95%;
     max-width:680px;
@@ -114,17 +121,19 @@ button,input{
     color:white;
     font-size:16px;
     font-weight:bold;
+    cursor:pointer;
 }
 
-.deposit{
+.depositBtn{
     background:#1565c0;
 }
 
-.withdraw{
+.withdrawBtn{
     background:#6a1b9a;
 }
 
 /* GAME */
+
 .game{
     width:95%;
     max-width:680px;
@@ -137,16 +146,20 @@ button,input{
     overflow:hidden;
     border-radius:20px;
     border:1px solid #303746;
+
     background:
-    radial-gradient(circle at 50% 85%,
-    #27466c,
-    #121a28 45%,
-    #080b12 75%);
+    radial-gradient(
+        circle at 50% 85%,
+        #27466c,
+        #121a28 45%,
+        #080b12 75%
+    );
 }
 
 .multiplier{
     position:absolute;
     top:38%;
+    left:0;
     width:100%;
     text-align:center;
     font-size:60px;
@@ -166,11 +179,17 @@ button,input{
 }
 
 /* CONTROLS */
+
 .controls{
     margin-top:15px;
     padding:18px;
     background:#151a24;
     border-radius:18px;
+}
+
+.betLabel{
+    color:#aaa;
+    margin-bottom:7px;
 }
 
 #bet{
@@ -197,28 +216,31 @@ button,input{
     color:white;
     font-size:16px;
     font-weight:bold;
+    cursor:pointer;
 }
 
-.start{
+.startBtn{
     background:#00c853;
 }
 
-.cash{
+.cashBtn{
     background:#ff9800;
 }
 
 button:disabled{
-    background:#555!important;
+    background:#555 !important;
+    cursor:not-allowed;
 }
 
 .status{
     text-align:center;
     margin-top:14px;
-    color:#ccc;
     min-height:22px;
+    color:#ccc;
 }
 
 /* HISTORY */
+
 .history{
     margin-top:15px;
     padding:18px;
@@ -226,12 +248,47 @@ button:disabled{
     border-radius:18px;
 }
 
+.history h3{
+    margin-top:0;
+}
+
 .historyRow{
     padding:10px 5px;
     border-bottom:1px solid #292f3b;
 }
 
+/* NOTICE */
+
+.notice{
+    width:95%;
+    max-width:680px;
+    margin:15px auto;
+    padding:12px;
+    text-align:center;
+    border-radius:10px;
+    background:#202631;
+    color:#aaa;
+    font-size:13px;
+}
+
+/* LOGOUT */
+
+.logout{
+    width:95%;
+    max-width:680px;
+    display:block;
+    margin:15px auto 30px;
+    padding:14px;
+    border:0;
+    border-radius:10px;
+    background:#292f3b;
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+}
+
 /* MODAL */
+
 .modal{
     position:fixed;
     inset:0;
@@ -252,42 +309,22 @@ button:disabled{
     position:relative;
 }
 
-.close{
+.closeBtn{
     position:absolute;
     right:12px;
     top:10px;
+    border:0;
     background:#303746;
     color:white;
-    border:0;
     padding:8px 12px;
     border-radius:8px;
+    cursor:pointer;
 }
 
 .modalTitle{
     font-size:22px;
     font-weight:bold;
     margin-bottom:15px;
-}
-
-.modal input{
-    width:100%;
-    padding:14px;
-    margin:7px 0;
-    border:1px solid #303746;
-    border-radius:10px;
-    background:#0d1118;
-    color:white;
-}
-
-.submit{
-    width:100%;
-    padding:14px;
-    margin-top:10px;
-    border:0;
-    border-radius:10px;
-    background:#00c853;
-    color:white;
-    font-weight:bold;
 }
 
 .info{
@@ -299,19 +336,31 @@ button:disabled{
     margin:12px 0;
 }
 
-.logout{
-    width:95%;
-    max-width:680px;
-    display:block;
-    margin:15px auto 30px;
+.modalInput{
+    width:100%;
     padding:14px;
+    margin:7px 0;
+    border:1px solid #303746;
+    border-radius:10px;
+    background:#0d1118;
+    color:white;
+    font-size:16px;
+}
+
+.submitBtn{
+    width:100%;
+    padding:14px;
+    margin-top:10px;
     border:0;
     border-radius:10px;
-    background:#292f3b;
+    background:#00c853;
     color:white;
+    font-weight:bold;
+    cursor:pointer;
 }
 
 /* MOBILE */
+
 @media(max-width:500px){
 
     .gameScreen{
@@ -320,6 +369,10 @@ button:disabled{
 
     .multiplier{
         font-size:48px;
+    }
+
+    .plane{
+        font-size:45px;
     }
 
     .buttons{
@@ -339,16 +392,18 @@ button:disabled{
 
 <body>
 
-<!-- LOGIN -->
-<div id="loginScreen" class="login">
+
+<!-- ================= LOGIN ================= -->
+
+<div id="loginScreen">
 
     <div class="loginBox">
 
-        <div class="brand">
+        <div class="loginLogo">
             ✈️ Crash360Live
         </div>
 
-        <p style="color:#aaa">
+        <p>
             Enter your player name
         </p>
 
@@ -357,21 +412,28 @@ button:disabled{
             type="text"
             maxlength="20"
             placeholder="Player Name"
+            autocomplete="off"
         >
 
         <button
-            class="greenBtn"
-            onclick="login()"
+            type="button"
+            class="enterBtn"
+            id="enterGameBtn"
         >
-            ENTER
+            ENTER GAME
         </button>
+
+        <p style="font-size:13px;">
+            Virtual coins
+        </p>
 
     </div>
 
 </div>
 
 
-<!-- HEADER -->
+<!-- ================= HEADER ================= -->
+
 <div class="header">
 
     <div class="logo">
@@ -380,7 +442,7 @@ button:disabled{
 
     <div class="player">
         Player:
-        <b id="player">Guest</b>
+        <b id="playerDisplay">Guest</b>
     </div>
 
     <div class="balance">
@@ -391,16 +453,831 @@ button:disabled{
 </div>
 
 
-<!-- WALLET -->
+<!-- ================= WALLET ================= -->
+
 <div class="wallet">
 
     <button
-        class="deposit"
-        onclick="openDeposit()"
+        type="button"
+        class="depositBtn"
+        id="depositBtn"
     >
         💳 Deposit
     </button>
 
     <button
-        class="withdraw"
-        onclick="open
+        type="button"
+        class="withdrawBtn"
+        id="withdrawBtn"
+    >
+        🏦 Withdrawal
+    </button>
+
+</div>
+
+
+<!-- ================= GAME ================= -->
+
+<div class="game">
+
+    <div class="gameScreen">
+
+        <div
+            id="multiplier"
+            class="multiplier"
+        >
+            1.00x
+        </div>
+
+        <div
+            id="plane"
+            class="plane"
+        >
+            ✈️
+        </div>
+
+    </div>
+
+
+    <div class="controls">
+
+        <div class="betLabel">
+            Virtual Coins
+        </div>
+
+        <input
+            id="bet"
+            type="number"
+            min="1"
+            value="100"
+            placeholder="Enter virtual coins"
+        >
+
+        <div class="buttons">
+
+            <button
+                type="button"
+                id="startBtn"
+                class="startBtn"
+            >
+                START GAME
+            </button>
+
+            <button
+                type="button"
+                id="cashBtn"
+                class="cashBtn"
+                disabled
+            >
+                CASH OUT
+            </button>
+
+        </div>
+
+        <div
+            id="status"
+            class="status"
+        >
+            Welcome to Crash360Live
+        </div>
+
+    </div>
+
+
+    <!-- HISTORY -->
+
+    <div class="history">
+
+        <h3>📜 Game History</h3>
+
+        <div id="history">
+            No games yet
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="notice">
+
+    Virtual-coins game. No real-money payment or
+    bank payout is connected.
+
+</div>
+
+
+<button
+    type="button"
+    class="logout"
+    id="logoutBtn"
+>
+    LOGOUT
+</button>
+
+
+<!-- ================= DEPOSIT MODAL ================= -->
+
+<div
+    id="depositModal"
+    class="modal"
+>
+
+    <div class="modalBox">
+
+        <button
+            type="button"
+            class="closeBtn"
+            id="closeDeposit"
+        >
+            ✕
+        </button>
+
+        <div class="modalTitle">
+            💳 Deposit
+        </div>
+
+        <div class="info">
+            Payment processing is not connected.
+            This wallet uses virtual coins only.
+        </div>
+
+        <p style="color:#aaa;">
+            This section is reserved for a
+            non-gaming/test payment interface.
+        </p>
+
+        <button
+            type="button"
+            class="submitBtn"
+            id="depositCloseBtn"
+        >
+            CLOSE
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- ================= WITHDRAWAL MODAL ================= -->
+
+<div
+    id="withdrawModal"
+    class="modal"
+>
+
+    <div class="modalBox">
+
+        <button
+            type="button"
+            class="closeBtn"
+            id="closeWithdraw"
+        >
+            ✕
+        </button>
+
+        <div class="modalTitle">
+            🏦 Withdrawal
+        </div>
+
+        <div class="info">
+            This is a test request form.
+            No bank payout is processed.
+        </div>
+
+        <input
+            id="holderName"
+            class="modalInput"
+            type="text"
+            placeholder="Account Holder Name"
+        >
+
+        <input
+            id="accountNumber"
+            class="modalInput"
+            type="text"
+            placeholder="Bank Account Number"
+        >
+
+        <input
+            id="ifscCode"
+            class="modalInput"
+            type="text"
+            placeholder="IFSC Code"
+        >
+
+        <input
+            id="withdrawAmount"
+            class="modalInput"
+            type="number"
+            min="1"
+            placeholder="Virtual Coins"
+        >
+
+        <button
+            type="button"
+            class="submitBtn"
+            id="submitWithdrawalBtn"
+        >
+            SUBMIT REQUEST
+        </button>
+
+        <div
+            id="withdrawStatus"
+            style="
+            text-align:center;
+            margin-top:12px;
+            color:#aaa;
+            "
+        ></div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* ================= VARIABLES ================= */
+
+let balance = 10000;
+
+let multiplier = 1;
+
+let crashPoint = 0;
+
+let gameRunning = false;
+
+let currentBet = 0;
+
+let gameTimer = null;
+
+
+/* ================= ELEMENTS ================= */
+
+const loginScreen =
+    document.getElementById("loginScreen");
+
+const playerName =
+    document.getElementById("playerName");
+
+const enterGameBtn =
+    document.getElementById("enterGameBtn");
+
+const playerDisplay =
+    document.getElementById("playerDisplay");
+
+const balanceDisplay =
+    document.getElementById("balance");
+
+const multiplierDisplay =
+    document.getElementById("multiplier");
+
+const plane =
+    document.getElementById("plane");
+
+const betInput =
+    document.getElementById("bet");
+
+const startBtn =
+    document.getElementById("startBtn");
+
+const cashBtn =
+    document.getElementById("cashBtn");
+
+const statusDisplay =
+    document.getElementById("status");
+
+const historyDisplay =
+    document.getElementById("history");
+
+
+/* ================= LOGIN ================= */
+
+function enterGame(){
+
+    const name =
+        playerName.value.trim();
+
+    if(name === ""){
+
+        alert("Please enter your player name.");
+
+        playerName.focus();
+
+        return;
+    }
+
+
+    localStorage.setItem(
+        "crash360_player",
+        name
+    );
+
+
+    playerDisplay.textContent =
+        name;
+
+
+    loginScreen.style.display =
+        "none";
+
+
+    statusDisplay.textContent =
+        "Welcome, " + name + "!";
+
+
+    playerName.value = "";
+
+}
+
+
+/* BUTTON CLICK */
+
+enterGameBtn.addEventListener(
+    "click",
+    enterGame
+);
+
+
+/* ENTER KEY */
+
+playerName.addEventListener(
+    "keydown",
+    function(event){
+
+        if(event.key === "Enter"){
+
+            enterGame();
+
+        }
+
+    }
+);
+
+
+/* ================= LOAD PLAYER ================= */
+
+window.addEventListener(
+    "load",
+    function(){
+
+        const savedPlayer =
+            localStorage.getItem(
+                "crash360_player"
+            );
+
+
+        if(savedPlayer){
+
+            playerDisplay.textContent =
+                savedPlayer;
+
+            loginScreen.style.display =
+                "none";
+
+        }
+
+
+        updateBalance();
+
+    }
+);
+
+
+/* ================= BALANCE ================= */
+
+function updateBalance(){
+
+    balanceDisplay.textContent =
+        Math.floor(balance);
+
+}
+
+
+/* ================= START GAME ================= */
+
+function startGame(){
+
+    if(gameRunning){
+
+        return;
+
+    }
+
+
+    const bet =
+        Number(betInput.value);
+
+
+    if(!Number.isFinite(bet) || bet <= 0){
+
+        statusDisplay.textContent =
+            "Enter a valid virtual coin amount.";
+
+        return;
+
+    }
+
+
+    if(bet > balance){
+
+        statusDisplay.textContent =
+            "Not enough virtual coins.";
+
+        return;
+
+    }
+
+
+    currentBet = bet;
+
+    balance -= bet;
+
+    updateBalance();
+
+
+    multiplier = 1;
+
+
+    crashPoint =
+        Number(
+            (
+                1.10 +
+                Math.random() * 5
+            ).toFixed(2)
+        );
+
+
+    gameRunning = true;
+
+
+    startBtn.disabled = true;
+
+    cashBtn.disabled = false;
+
+
+    multiplierDisplay.classList.remove(
+        "crashed"
+    );
+
+
+    multiplierDisplay.textContent =
+        "1.00x";
+
+
+    plane.style.left =
+        "20px";
+
+    plane.style.bottom =
+        "25px";
+
+
+    statusDisplay.textContent =
+        "🚀 Flying...";
+
+
+    gameTimer =
+        setInterval(
+
+            function(){
+
+                multiplier +=
+                    0.01 +
+                    multiplier * 0.002;
+
+
+                multiplierDisplay.textContent =
+                    multiplier.toFixed(2) +
+                    "x";
+
+
+                const progress =
+                    Math.min(
+                        (
+                            multiplier /
+                            crashPoint
+                        ) * 100,
+                        100
+                    );
+
+
+                plane.style.left =
+                    (
+                        20 +
+                        progress * 0.7
+                    ) + "%";
+
+
+                plane.style.bottom =
+                    (
+                        25 +
+                        progress * 1.4
+                    ) + "px";
+
+
+                if(
+                    multiplier >=
+                    crashPoint
+                ){
+
+                    crashGame();
+
+                }
+
+            },
+
+            100
+        );
+
+}
+
+
+/* ================= CASH OUT ================= */
+
+function cashOut(){
+
+    if(!gameRunning){
+
+        return;
+
+    }
+
+
+    stopGame();
+
+
+    const winnings =
+        Math.floor(
+            currentBet *
+            multiplier
+        );
+
+
+    balance += winnings;
+
+    updateBalance();
+
+
+    addHistory(
+        "💰 Cash Out " +
+        multiplier.toFixed(2) +
+        "x | +" +
+        winnings +
+        " virtual coins"
+    );
+
+
+    statusDisplay.textContent =
+        "Cash Out: " +
+        winnings +
+        " virtual coins";
+
+}
+
+
+/* ================= CRASH ================= */
+
+function crashGame(){
+
+    stopGame();
+
+
+    multiplierDisplay.textContent =
+        crashPoint.toFixed(2) +
+        "x";
+
+
+    multiplierDisplay.classList.add(
+        "crashed"
+    );
+
+
+    statusDisplay.textContent =
+        "💥 Crash at " +
+        crashPoint.toFixed(2) +
+        "x";
+
+
+    addHistory(
+        "💥 Crash " +
+        crashPoint.toFixed(2) +
+        "x | Lost " +
+        currentBet +
+        " virtual coins"
+    );
+
+}
+
+
+/* ================= STOP GAME ================= */
+
+function stopGame(){
+
+    if(gameTimer !== null){
+
+        clearInterval(gameTimer);
+
+        gameTimer = null;
+
+    }
+
+
+    gameRunning = false;
+
+    startBtn.disabled = false;
+
+    cashBtn.disabled = true;
+
+}
+
+
+/* ================= HISTORY ================= */
+
+function addHistory(text){
+
+    if(
+        historyDisplay.textContent ===
+        "No games yet"
+    ){
+
+        historyDisplay.innerHTML = "";
+
+    }
+
+
+    const row =
+        document.createElement("div");
+
+
+    row.className =
+        "historyRow";
+
+
+    row.textContent =
+        text;
+
+
+    historyDisplay.prepend(row);
+
+}
+
+
+/* ================= DEPOSIT ================= */
+
+const depositModal =
+    document.getElementById(
+        "depositModal"
+    );
+
+
+document.getElementById(
+    "depositBtn"
+).addEventListener(
+    "click",
+    function(){
+
+        depositModal.style.display =
+            "flex";
+
+    }
+);
+
+
+document.getElementById(
+    "closeDeposit"
+).addEventListener(
+    "click",
+    function(){
+
+        depositModal.style.display =
+            "none";
+
+    }
+);
+
+
+document.getElementById(
+    "depositCloseBtn"
+).addEventListener(
+    "click",
+    function(){
+
+        depositModal.style.display =
+            "none";
+
+    }
+);
+
+
+/* ================= WITHDRAWAL ================= */
+
+const withdrawModal =
+    document.getElementById(
+        "withdrawModal"
+    );
+
+
+document.getElementById(
+    "withdrawBtn"
+).addEventListener(
+    "click",
+    function(){
+
+        withdrawModal.style.display =
+            "flex";
+
+    }
+);
+
+
+document.getElementById(
+    "closeWithdraw"
+).addEventListener(
+    "click",
+    function(){
+
+        withdrawModal.style.display =
+            "none";
+
+    }
+);
+
+
+document.getElementById(
+    "submitWithdrawalBtn"
+).addEventListener(
+    "click",
+    function(){
+
+        const holder =
+            document.getElementById(
+                "holderName"
+            ).value.trim();
+
+        const account =
+            document.getElementById(
+                "accountNumber"
+            ).value.trim();
+
+        const ifsc =
+            document.getElementById(
+                "ifscCode"
+            ).value.trim();
+
+        const amount =
+            document.getElementById(
+                "withdrawAmount"
+            ).value;
+
+
+        const message =
+            document.getElementById(
+                "withdrawStatus"
+            );
+
+
+        if(
+            !holder ||
+            !account ||
+            !ifsc ||
+            !amount
+        ){
+
+            message.textContent =
+                "Please fill all fields.";
+
+            return;
+
+        }
+
+
+        message.textContent =
+            "Request recorded for testing. No bank payout is processed.";
+
+    }
+);
+
+
+/* ================= LOGOUT ================= */
+
+document.getElementById(
+    "logoutBtn"
+).addEventListener(
+    "click",
+    function(){
+
+        localStorage.removeItem(
+            "crash360_player"
+        );
+
+        location.reload();
+
+    }
+);
+
+</script>
+
+</body>
+    </html>
