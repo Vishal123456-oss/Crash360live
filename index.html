@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Crash Demo</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#0b0e14;
+    color:white;
+}
+
+/* LOGIN */
+
+.loginScreen{
+    position:fixed;
+    inset:0;
+    background:#0b0e14;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    z-index:9999;
+}
+
+.loginBox{
+    width:90%;
+    max-width:400px;
+    background:#171b25;
+    padding:30px;
+    border-radius:20px;
+    text-align:center;
+    box-shadow:0 10px 40px rgba(0,0,0,.5);
+}
+
+.loginBox h1{
+    margin-top:0;
+    color:#ff3b30;
+}
+
+.loginBox p{
+    color:#aaa;
+}
+
+.loginBox input{
+    width:100%;
+    padding:14px;
+    border:none;
+    border-radius:10px;
+    margin:15px 0;
+    font-size:16px;
+}
+
+.loginBox button{
+    width:100%;
+    padding:14px;
+    border:none;
+    border-radius:10px;
+    background:#00c853;
+    color:white;
+    font-size:17px;
+    font-weight:bold;
+}
+
+/* HEADER */
+
+.header{
+    background:#151922;
+    padding:18px;
+    text-align:center;
+    border-bottom:1px solid #292e38;
+}
+
+.logo{
+    font-size:25px;
+    font-weight:bold;
+    color:#ff3b30;
+}
+
+.player{
+    margin-top:8px;
+    color:#aaa;
+}
+
+.balance{
+    margin-top:8px;
+    font-size:19px;
+}
+
+#balance{
+    color:#00e676;
+}
+
+/* GAME */
+
+.game{
+    width:95%;
+    max-width:650px;
+    margin:20px auto;
+}
+
+.gameScreen{
+    height:350px;
+    background:
+        radial-gradient(circle at 50% 80%,#253b60,#111722 55%,#090c12);
+    border-radius:20px;
+    position:relative;
+    overflow:hidden;
+    border:1px solid #293342;
+}
+
+.multiplier{
+    position:absolute;
+    top:40%;
+    left:0;
+    width:100%;
+    text-align:center;
+    font-size:60px;
+    font-weight:bold;
+    z-index:3;
+}
+
+.crashed{
+    color:#ff3b30;
+}
+
+.plane{
+    position:absolute;
+    left:20px;
+    bottom:25px;
+    font-size:55px;
+    transition:.1s linear;
+    z-index:2;
+}
+
+/* CONTROLS */
+
+.controls{
+    margin-top:15px;
+    background:#151922;
+    padding:18px;
+    border-radius:18px;
+}
+
+.betLabel{
+    color:#aaa;
+    margin-bottom:7px;
+}
+
+#bet{
+    width:100%;
+    padding:14px;
+    border:1px solid #303642;
+    background:#0e1118;
+    color:white;
+    border-radius:10px;
+    font-size:16px;
+}
+
+.buttons{
+    display:flex;
+    gap:10px;
+    margin-top:12px;
+}
+
+button{
+    border:0;
+    border-radius:10px;
+    padding:14px;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.startBtn{
+    flex:1;
+    background:#00c853;
+    color:white;
+}
+
+.cashBtn{
+    flex:1;
+    background:#ff9800;
+    color:white;
+}
+
+button:disabled{
+    background:#555;
+    cursor:not-allowed;
+}
+
+.status{
+    text-align:center;
+    margin-top:14px;
+    min-height:22px;
+    color:#ccc;
+}
+
+/* HISTORY */
+
+.history{
+    margin-top:15px;
+    background:#151922;
+    padding:18px;
+    border-radius:18px;
+}
+
+.history h3{
+    margin-top:0;
+}
+
+.historyRow{
+    padding:10px 5px;
+    border-bottom:1px solid #292e38;
+    color:#ddd;
+}
+
+/* LOGOUT */
+
+.logout{
+    margin-top:15px;
+    width:100%;
+    background:#292e38;
+    color:white;
+}
+
+/* MOBILE */
+
+@media(max-width:500px){
+
+    .gameScreen{
+        height:300px;
+    }
+
+    .multiplier{
+        font-size:48px;
+    }
+
+    .plane{
+        font-size:45px;
+    }
+
+    .buttons{
+        flex-direction:column;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+
+<!-- LOGIN SCREEN -->
+
+<div id="loginScreen" class="loginScreen">
+
+    <div class="loginBox">
+
+        <h1>✈️ CRASH DEMO</h1>
+
+        <p>Enter your player name</p>
+
+        <input
+            type="text"
+            id="playerName"
+            placeholder="Player Name"
+            maxlength="20"
+        >
+
+        <button onclick="loginPlayer()">
+            ENTER GAME
+        </button>
+
+        <p style="font-size:13px;">
+            Virtual coins only
+        </p>
+
+    </div>
+
+</div>
+
+
+<!-- HEADER -->
+
+<div class="header">
+
+    <div class="logo">
+        ✈️ CRASH DEMO
+    </div>
+
+    <div class="player">
+        Player:
+        <b id="playerDisplay">Guest</b>
+    </div>
+
+    <div class="balance">
+        🪙 Virtual Coins:
+        <b id="balance">10000</b>
+    </div>
+
+</div>
+
+
+<!-- GAME -->
+
+<div class="game">
+
+    <div class="gameScreen">
+
+        <div
+            id="multiplier"
+            class="multiplier"
+        >
+            1.00x
+        </div>
+
+        <div
+            id="plane"
+            class="plane"
+        >
+            ✈️
+        </div>
+
+    </div>
+
+
+    <!-- CONTROLS -->
+
+    <div class="controls">
+
+        <div class="betLabel">
+            Virtual Coins
+        </div>
+
+        <input
+            type="number"
+            id="bet"
+            value="100"
+            min="1"
+            placeholder="Enter virtual coins"
+        >
+
+        <div class="buttons">
+
+            <button
+                id="startBtn"
+                class="startBtn"
+                onclick="startGame()"
+            >
+                START GAME
+            </button>
+
+            <button
+                id="cashBtn"
+                class="cashBtn"
+                onclick="cashOut()"
+                disabled
+            >
+                CASH OUT
+            </button>
+
+        </div>
+
+        <div
+            id="status"
+            class="status"
+        >
+            Welcome! Virtual coins only.
+        </div>
+
+    </div>
+
+
+    <!-- HISTORY -->
+
+    <div class="history">
+
+        <h3>
+            📜 Game History
+        </h3>
+
+        <div id="history">
+            No games yet
+        </div>
+
+    </div>
+
+
+    <button
+        class="logout"
+        onclick="logoutPlayer()"
+    >
+        Logout
+    </button>
+
+</div>
+
+
+<script>
+
+/* VARIABLES */
+
+let balance = 10000;
+
+let multiplier = 1;
+
+let crashPoint = 0;
+
+let gameRunning = false;
+
+let currentBet = 0;
+
+let gameTimer;
+
+
+/* ELEMENTS */
+
+const balanceEl =
+    document.getElementById("balance");
+
+const multiplierEl =
+    document.getElementById("multiplier");
+
+const planeEl =
+    document.getElementById("plane");
+
+const statusEl =
+    document.getElementById("status");
+
+const startBtn =
+    document.getElementById("startBtn");
+
+const cashBtn =
+    document.getElementById("cashBtn");
+
+const historyEl =
+    document.getElementById("history");
+
+const playerDisplay =
+    document.getElementById("playerDisplay");
+
+
+/* UPDATE BALANCE */
+
+function updateBalance(){
+
+    balanceEl.textContent =
+        Math.floor(balance);
+
+}
+
+
+/* LOGIN */
+
+function loginPlayer(){
+
+    const name =
+        document
+        .getElementById("playerName")
+        .value
+        .trim();
+
+    if(name === ""){
+
+        alert("Please enter your player name.");
+
+        return;
+
+    }
+
+    localStorage.setItem(
+        "playerName",
+        name
+    );
+
+    playerDisplay.textContent =
+        name;
+
+    document
+        .getElementById("loginScreen")
+        .style.display = "none";
+
+    statusEl.textContent =
+        "Welcome, " + name + "!";
+
+}
+
+
+/* LOAD PLAYER */
+
+window.addEventListener(
+    "load",
+    function(){
+
+        const savedName =
+            localStorage.getItem(
+                "playerName"
+            );
+
+        if(savedName){
+
+            playerDisplay.textContent =
+                savedName;
+
+            document
+                .getElementById("loginScreen")
+                .style.display = "none";
+
+        }
+
+        updateBalance();
+
+    }
+);
+
+
+/* START GAME */
+
+function startGame(){
+
+    if(gameRunning){
+
+        return;
+
+    }
+
+
+    const bet =
+        Number(
+            document
+            .getElementById("bet")
+            .value
+        );
+
+
+    if(!bet || bet <= 0){
+
+        statusEl.textContent =
+            "Enter a valid virtual coin amount.";
+
+        return;
+
+    }
+
+
+    if(bet > balance){
+
+        statusEl.textContent =
+            "Not enough virtual coins.";
+
+        return;
+
+    }
+
+
+    currentBet = bet;
+
+    balance -= bet;
+
+    updateBalance();
+
+
+    multiplier = 1;
+
+    crashPoint =
+        randomCrash();
+
+
+    gameRunning = true;
+
+
+    startBtn.disabled = true;
+
+    cashBtn.disabled = false;
+
+    startBtn.textContent =
+        "RUNNING...";
+
+
+    multiplierEl.classList.remove(
+        "crashed"
+    );
+
+
+    statusEl.textContent =
+        "🚀 Flying...";
+
+
+    planeEl.style.left =
+        "20px";
+
+    planeEl.style.bottom =
+        "25px";
+
+
+    gameTimer =
+        setInterval(
+
+            function(){
+
+                multiplier +=
+                    0.01 +
+                    multiplier * 0.002;
+
+
+                multiplierEl.textContent =
+                    multiplier.toFixed(2) +
+                    "x";
+
+
+                const progress =
+                    Math.min(
+                        (multiplier /
+                        crashPoint) *
+                        100,
+                        100
+                    );
+
+
+                planeEl.style.left =
+                    (20 +
+                    progress * 0.7) +
+                    "%";
+
+
+                planeEl.style.bottom =
+                    (25 +
+                    progress * 1.4) +
+                    "px";
+
+
+                if(
+                    multiplier >=
+                    crashPoint
+                ){
+
+                    crashGame();
+
+                }
+
+            },
+
+            100
+
+        );
+
+}
+
+
+/* RANDOM CRASH */
+
+function randomCrash(){
+
+    return Number(
+        (
+            1.10 +
+            Math.random() * 5
+        ).toFixed(2)
+    );
+
+}
+
+
+/* CASH OUT */
+
+function cashOut(){
+
+    if(!gameRunning){
+
+        return;
+
+    }
+
+
+    clearInterval(gameTimer);
+
+
+    const winnings =
+        Math.floor(
+            currentBet *
+            multiplier
+        );
+
+
+    balance += winnings;
+
+
+    updateBalance();
+
+
+    addHistory(
+        "💰 Cashed out at " +
+        multiplier.toFixed(2) +
+        "x | +" +
+        winnings +
+        " coins"
+    );
+
+
+    statusEl.textContent =
+        "✅ Cash Out: " +
+        winnings +
+        " virtual coins";
+
+
+    gameRunning = false;
+
+
+    startBtn.disabled = false;
+
+    cashBtn.disabled = true;
+
+    startBtn.textContent =
+        "START GAME";
+
+}
+
+
+/* CRASH */
+
+function crashGame(){
+
+    clearInterval(gameTimer);
+
+
+    gameRunning = false;
+
+
+    multiplierEl.textContent =
+        crashPoint.toFixed(2) +
+        "x";
+
+
+    multiplierEl.classList.add(
+        "crashed"
+    );
+
+
+    statusEl.textContent =
+        "💥 CRASH at " +
+        crashPoint.toFixed(2) +
+        "x";
+
+
+    addHistory(
+        "💥 Crash at " +
+        crashPoint.toFixed(2) +
+        "x | Lost " +
+        currentBet +
+        " coins"
+    );
+
+
+    startBtn.disabled = false;
+
+    cashBtn.disabled = true;
+
+    startBtn.textContent =
+        "START GAME";
+
+}
+
+
+/* HISTORY */
+
+function addHistory(text){
+
+    if(
+        historyEl.textContent ===
+        "No games yet"
+    ){
+
+        historyEl.innerHTML = "";
+
+    }
+
+
+    const row =
+        document.createElement(
+            "div"
+        );
+
+
+    row.className =
+        "historyRow";
+
+
+    row.textContent =
+        text;
+
+
+    historyEl.prepend(row);
+
+}
+
+
+/* LOGOUT */
+
+function logoutPlayer(){
+
+    localStorage.removeItem(
+        "playerName"
+    );
+
+
+    location.reload();
+
+}
+
+</script>
+
+</body>
+  </html>
